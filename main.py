@@ -1,28 +1,35 @@
-import webbrowser, time, sys
+""" A personal bot designed to simplify my browsing habits """
+import webbrowser
+import time
+import sys
 
-checkin_urls = ["https://www.youtube.com/dashboard?o=U", "https://my.questrade.com/trading/account/balances", "https://affiliate-program.amazon.com/home"]
+CHECKIN_URLS = ["https://www.youtube.com/dashboard?o=U",
+                "https://my.questrade.com/trading/account/balances",
+                "https://affiliate-program.amazon.com/home"]
 
 def parse_cmd(cmd):
-    commands = {
-            "c" : checkin,
-            "checkin" : checkin,
-            "e" : sys.exit,
-            "end" : sys.exit,
-            "q" : sys.exit,
-            "quit" : sys.exit,
-            "m" : mail,
-            "mail" : mail,
-            "email" : mail }
+    """ Parses string commands and shortcuts to functions """
+    commands = {"c" : checkin,
+                "checkin" : checkin,
+                "e" : sys.exit,
+                "end" : sys.exit,
+                "q" : sys.exit,
+                "quit" : sys.exit,
+                "m" : mail,
+                "mail" : mail,
+                "email" : mail}
     commands[cmd.lower()]()
 
 def checkin():
-    for url in checkin_urls:
-        webbrowser.open(url, new = 2)
+    """ Opens earnings checkin URLs """
+    for url in CHECKIN_URLS:
+        webbrowser.open(url, new=2)
         time.sleep(1)
 
 def mail():
+    """ Opens both mail accounts of mine """
     for i in range(2):
-        webbrowser.open("https://mail.google.com/mail/u/" + str(i), new = 2)
+        webbrowser.open("https://mail.google.com/mail/u/" + str(i), new=2)
         time.sleep(1)
 
 if __name__ == "__main__":
