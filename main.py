@@ -5,7 +5,8 @@ import sys
 
 CHECKIN_URLS = ["https://www.youtube.com/dashboard?o=U",
                 "https://my.questrade.com/trading/account/balances",
-                "https://affiliate-program.amazon.com/home"]
+                "https://affiliate-program.amazon.com/home",
+                "https://admin.mailchimp.com"]
 
 def parse_cmd(cmd):
     """ Parses string commands and shortcuts to functions """
