@@ -7,7 +7,9 @@ from constants import CHECKIN_URLS, MAIL_URLS, SCHOOL_URLS
 from daemon import Daemon
 
 class PersonalBot():
+    """ Personal bot: someone to do your bidding """
     def __init__(self):
+        self.urls_opened = 0
         self.youtube = Youtube()
         self.daemon = Daemon()
 
@@ -28,9 +30,10 @@ class PersonalBot():
                     "yt" : self.youtube.subscribers}
         commands[cmd.lower()]()
 
-    def open_urls(self,urls):
+    def open_urls(self, urls):
         """ Opens a set of urls with an appropriate delay """
         for url in urls:
+            self.urls_opened += 1
             webbrowser.open(url, new=2)
             time.sleep(1)
 
@@ -47,6 +50,6 @@ class PersonalBot():
         self.open_urls(SCHOOL_URLS)
 
 if __name__ == "__main__":
-    bot = PersonalBot()
+    BOT = PersonalBot()
     while True:
-        bot.parse_cmd(input())
+        BOT.parse_cmd(input())
