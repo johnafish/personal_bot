@@ -4,6 +4,7 @@ import time
 import sys
 import youtube
 from constants import CHECKIN_URLS, MAIL_URLS, SCHOOL_URLS
+import daemon
 
 def parse_cmd(cmd):
     """ Parses string commands and shortcuts to functions """
@@ -41,5 +42,6 @@ def school():
     open_urls(SCHOOL_URLS)
 
 if __name__ == "__main__":
+    daemon.start_threads()
     while True:
         parse_cmd(input())
