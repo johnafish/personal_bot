@@ -4,11 +4,11 @@ from threading import Thread
 from youtube import Youtube
 
 def youtube_thread():
-    """ Print Youtube Subs Every 5 minutes """
+    """ Print Youtube Subs Every minute """
     yt_instance = Youtube()
     while True:
         yt_instance.subscribers()
-        time.sleep(300)
+        time.sleep(60)
 
 
 class Daemon():
