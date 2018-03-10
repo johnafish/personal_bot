@@ -11,5 +11,5 @@ def youtube_thread():
 
 def start_threads():
     """ Start list of threads """
-    yt_thread = Thread(target = youtube_thread)
+    yt_thread = Thread(target=youtube_thread)
     yt_thread.start()
