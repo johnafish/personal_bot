@@ -1,3 +1,4 @@
 *.swp
 secrets/*
 __pycache__/*
+*.sqlite
