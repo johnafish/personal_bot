@@ -2,6 +2,7 @@
 import webbrowser
 import time
 import sys
+import youtube
 from constants import CHECKIN_URLS, MAIL_URLS, SCHOOL_URLS
 
 def parse_cmd(cmd):
@@ -16,7 +17,9 @@ def parse_cmd(cmd):
                 "mail" : mail,
                 "email" : mail,
                 "s" : school,
-                "school" : school}
+                "school" : school,
+                "y" : youtube.subscribers,
+                "yt" : youtube.subscribers}
     commands[cmd.lower()]()
 
 def open_urls(urls):
