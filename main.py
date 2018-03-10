@@ -2,46 +2,51 @@
 import webbrowser
 import time
 import sys
-import youtube
+from youtube import Youtube
 from constants import CHECKIN_URLS, MAIL_URLS, SCHOOL_URLS
-import daemon
+from daemon import Daemon
 
-def parse_cmd(cmd):
-    """ Parses string commands and shortcuts to functions """
-    commands = {"c" : checkin,
-                "checkin" : checkin,
-                "e" : sys.exit,
-                "end" : sys.exit,
-                "q" : sys.exit,
-                "quit" : sys.exit,
-                "m" : mail,
-                "mail" : mail,
-                "email" : mail,
-                "s" : school,
-                "school" : school,
-                "y" : youtube.subscribers,
-                "yt" : youtube.subscribers}
-    commands[cmd.lower()]()
+class PersonalBot():
+    def __init__(self):
+        self.youtube = Youtube()
+        self.daemon = Daemon()
 
-def open_urls(urls):
-    """ Opens a set of urls with an appropriate delay """
-    for url in urls:
-        webbrowser.open(url, new=2)
-        time.sleep(1)
+    def parse_cmd(self, cmd):
+        """ Parses string commands and shortcuts to functions """
+        commands = {"c" : self.checkin,
+                    "checkin" : self.checkin,
+                    "e" : sys.exit,
+                    "end" : sys.exit,
+                    "q" : sys.exit,
+                    "quit" : sys.exit,
+                    "m" : self.mail,
+                    "mail" : self.mail,
+                    "email" : self.mail,
+                    "s" : self.school,
+                    "school" : self.school,
+                    "y" : self.youtube.subscribers,
+                    "yt" : self.youtube.subscribers}
+        commands[cmd.lower()]()
 
-def checkin():
-    """ Opens earnings checkin URLs """
-    open_urls(CHECKIN_URLS)
+    def open_urls(self,urls):
+        """ Opens a set of urls with an appropriate delay """
+        for url in urls:
+            webbrowser.open(url, new=2)
+            time.sleep(1)
 
-def mail():
-    """ Opens both mail accounts of mine """
-    open_urls(MAIL_URLS)
+    def checkin(self):
+        """ Opens earnings checkin URLs """
+        self.open_urls(CHECKIN_URLS)
 
-def school():
-    """ Opens my school related tabs """
-    open_urls(SCHOOL_URLS)
+    def mail(self):
+        """ Opens both mail accounts of mine """
+        self.open_urls(MAIL_URLS)
+
+    def school(self):
+        """ Opens my school related tabs """
+        self.open_urls(SCHOOL_URLS)
 
 if __name__ == "__main__":
-    daemon.start_threads()
+    bot = PersonalBot()
     while True:
-        parse_cmd(input())
+        bot.parse_cmd(input())

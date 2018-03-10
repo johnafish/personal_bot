@@ -1,15 +1,20 @@
 """ Threads to run constantly """
 import time
 from threading import Thread
-import youtube
+from youtube import Youtube
 
-def youtube_thread():
-    """ Print Youtube Subs Every 5 minutes """
-    while True:
-        youtube.subscribers()
-        time.sleep(300)
+class Daemon():
+    def __init__(self):
+        self.start_threads()
 
-def start_threads():
-    """ Start list of threads """
-    yt_thread = Thread(target=youtube_thread)
-    yt_thread.start()
+    def youtube_thread(self):
+        """ Print Youtube Subs Every 5 minutes """
+        yt_instance = Youtube()
+        while True:
+            yt_instance.subscribers()
+            time.sleep(300)
+
+    def start_threads(self):
+        """ Start list of threads """
+        yt_thread = Thread(target=self.youtube_thread)
+        yt_thread.start()
