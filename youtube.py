@@ -1,4 +1,5 @@
 """ Simple Youtube Analytics """
+from datetime import date
 import requests
 from database import Database
 
@@ -51,7 +52,8 @@ class Youtube():
     def daily_subscribers(self):
         """ Get the number of subscribers since midnight """
         daily_data = self.database.cursor\
-                     .execute("SELECT * from youtube WHERE date >= '2018-03-10'").fetchall()
+                     .execute("SELECT * from youtube WHERE date >= '{0}'"\
+                     .format(date.today())).fetchall()
         first = daily_data[0]
         last = daily_data[-1]
         return last[0] - first[0]
