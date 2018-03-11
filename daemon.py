@@ -2,19 +2,35 @@
 import time
 from threading import Thread
 from youtube import Youtube
+from stocks import Portfolio
+
+def daily_thread():
+    """ Print daily data every minute """
+    youtube = Youtube()
+    portfolio = Portfolio()
+    while True:
+        try:
+            youtube.subscribers()
+            portfolio.value()
+        except ConnectionError:
+            time.sleep(300)
+        time.sleep(60)
 
 def youtube_thread():
     """ Print Youtube Subs Every minute """
     yt_instance = Youtube()
     while True:
-        yt_instance.subscribers()
+        try:
+            yt_instance.subscribers()
+        except ConnectionError:
+            time.sleep(300) # Sleep if error
         time.sleep(60)
 
 
 class Daemon():
     """ Run an arbitrary number of threads in the background of the bot """
     def __init__(self):
-        self.threadlist = [youtube_thread]
+        self.threadlist = [daily_thread]
         self.active_threads = []
         self.start_threads()
 

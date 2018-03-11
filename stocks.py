@@ -1,4 +1,5 @@
 """ Get value of portfolio from market """
+from datetime import date
 import requests
 from database import Database
 
@@ -68,6 +69,31 @@ class Portfolio():
                                      .format(self.portfolio_value()))
         self.database.connection.commit()
 
+    def daily_data(self):
+        """ Gets rows entered since start of day """
+        return self.database.cursor\
+                            .execute("SELECT * from portfolio_value WHERE date >= '{0}'"\
+                            .format(date.today())).fetchall()
+
+    def daily_pnl(self):
+        """ Gets difference in value since start of day """
+        daily_data = self.daily_data()
+        first = daily_data[0]
+        last = daily_data[-1]
+        return last[0] - first[0]
+
+    def daily_percentile_pnl(self):
+        """ Returns daily pnl as percentage """
+        starting_value = self.daily_data()[0][0]
+        return self.daily_pnl() / starting_value
+
+    def value(self):
+        """ Gets value, writes to db, prints daily pnl """
+        self.write_portfolio_value()
+        current_pnl = self.daily_pnl()
+        percentile_pnl = self.daily_percentile_pnl()
+        print("{0} ({1}%)".format(current_pnl, percentile_pnl))
+
 if __name__ == "__main__":
     PORTFOLIO = Portfolio()
-    PORTFOLIO.write_portfolio_value()
+    PORTFOLIO.value()
