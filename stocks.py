@@ -2,6 +2,7 @@
 from datetime import date
 import requests
 from database import Database
+import helpers
 
 class Portfolio():
     """ A portfolio of traded securities """
@@ -92,7 +93,8 @@ class Portfolio():
         self.write_portfolio_value()
         current_pnl = self.daily_pnl()
         percentile_pnl = self.daily_percentile_pnl()
-        print("{0} ({1}%)".format(current_pnl, percentile_pnl))
+        print("Portfolio")
+        print("{0} ({1})".format(helpers.pretty_num_to_s(current_pnl, money=True), helpers.pretty_num_to_s(percentile_pnl, percentage = True)))
 
 if __name__ == "__main__":
     PORTFOLIO = Portfolio()

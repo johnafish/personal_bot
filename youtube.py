@@ -2,6 +2,7 @@
 from datetime import date
 import requests
 from database import Database
+import helpers
 
 class Youtube():
     """ A YouTube analytics object """
@@ -22,16 +23,10 @@ class Youtube():
         subscribers = self.get_subscribers()
         self.write_subscribers_to_db(subscribers)
         daily_subscriptions = self.daily_subscribers()
-        daily_sub_string = ""
-        if daily_subscriptions > 0:
-            daily_sub_string += '\033[92m'
-            daily_sub_string += "+{0}".format(daily_subscriptions)
-        else:
-            daily_sub_string += '\033[91m'
-            daily_sub_string += "{0}".format(daily_subscriptions)
-        daily_sub_string += '\033[0m'
+        daily_sub_string = helpers.pretty_num_to_s(daily_subscriptions)
 
-        print("{0} ({1})".format(subscribers, daily_sub_string))
+        print("YouTube")
+        print("{0} Subscribers ({1})".format(helpers.num_to_s(int(subscribers)), daily_sub_string))
 
     def get_subscribers(self):
         """ Get the number of subscribers to channel """
